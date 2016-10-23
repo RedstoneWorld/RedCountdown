@@ -3,25 +3,25 @@ max-length: 10
 titles:
 - lowest: 2
   title:
-  - &4%number%
-# - subtitle
+  - "&4%number%"
+# - "subtitle"
 - lowest: 1
   title:
-  - &e%number%
-# - subtitle
+  - "&e%number%"
+# - "subtitle"
 - lowest: 0
   title:
-  - &2Los!
-# - subtitle
+  - "&2Los!"
+# - "subtitle"
 msg:
-  started: &eCountdown wurde gestartet (%time% Sek.)
-  finished: &a%time% Sekunden Countdown erfolgreich beendet.
-  cancelled: &eCountdown abgebrochen!
+  started: "&eCountdown wurde gestartet (%time% Sek.)"
+  finished: "&a%time% Sekunden Countdown erfolgreich beendet."
+  cancelled: "&eCountdown abgebrochen!"
   error:
-    syntax: &c/counter <zeit>|cancel|reload
-    no-permission: &cDu hast nicht das Recht %permission%!
-    not-a-number: &c%input% ist keine Nummer!
-    countdown-too-long: &c%input% ist zu lang! Die maximale Länge ist %max-length% Sekunden!
-    no-countdown-running: &cEs läuft zur Zeit kein Countdown?
-    countdown-already-running: &cEs läuft zur Zeit schon ein Countdown! Beende ihn mit /counter cancel.
-    unsupported-sender: &c%tyoe% können keine Countdowns starten!
+    syntax: "&c/counter <zeit>|cancel|reload"
+    no-permission: "&cDu hast nicht das Recht %permission%!"
+    not-a-number: "&c%input% ist keine Nummer!"
+    countdown-too-long: "&c%input% ist zu lang! Die maximale Länge ist %max-length% Sekunden!"
+    no-countdown-running: "&cEs läuft zur Zeit kein Countdown?"
+    countdown-already-running: "&cEs läuft zur Zeit schon ein Countdown! Beende ihn mit /counter cancel."
+    unsupported-sender: "&c%tyoe% können keine Countdowns starten!"
