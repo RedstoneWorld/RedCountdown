@@ -18,7 +18,7 @@ msg:
   finished: &a%time% Sekunden Countdown erfolgreich beendet.
   cancelled: &eCountdown abgebrochen!
   error:
-    syntax: %c/counter <zeit>|cancel|reload
+    syntax: &c/counter <zeit>|cancel|reload
     no-permission: &cDu hast nicht das Recht %permission%!
     not-a-number: &c%input% ist keine Nummer!
     countdown-too-long: &c%input% ist zu lang! Die maximale Länge ist %max-length% Sekunden!
