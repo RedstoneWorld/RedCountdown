@@ -4,7 +4,7 @@ main: de.redstoneworld.redcountdown.RedCountdown
 authors: [Phoenix616]
 commands:
    redcountdown:
-      aliases: [count]
+      aliases: [counter,countdown]
       description: Plugin command description.
       usage: /<command> <time>|cancel|reload
       permission: rwm.redcountdown.use
