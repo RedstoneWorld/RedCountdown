@@ -24,7 +24,7 @@ public final class RedCountdown extends JavaPlugin {
 
     private List<Title> titles;
 
-    private BukkitTask countdownTask;
+    private BukkitTask countdownTask = null;
 
     @Override
     public void onEnable() {
@@ -59,6 +59,7 @@ public final class RedCountdown extends JavaPlugin {
             } else if ("cancel".equalsIgnoreCase(args[0])) {
                 if (countdownTask != null) {
                     countdownTask.cancel();
+                    countdownTask = null;
                     sender.sendMessage(getLang("cancelled"));
                 } else {
                     sender.sendMessage(getLang("error.no-countdown-running"));
@@ -128,6 +129,7 @@ public final class RedCountdown extends JavaPlugin {
 
                         if (step == 0) {
                             cancel();
+                            countdownTask = null;
                             starter.sendMessage(getLang("finished", "time", String.valueOf(length)));
                         }
                         step--;
