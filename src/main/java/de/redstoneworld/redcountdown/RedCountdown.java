@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,8 +36,9 @@ public final class RedCountdown extends JavaPlugin {
         saveDefaultConfig();
         reloadConfig();
 
-        getCommand("redcountdown").setPermissionMessage(getLang("error.no-permission", "permission", getCommand("counter").getPermission()));
-        getCommand("redcountdown").setUsage(translate(getLang("error.syntax")));
+        PluginCommand command = getCommand("redcountdown");
+        command.setPermissionMessage(getLang("error.no-permission", "permission", command.getPermission()));
+        command.setUsage(translate(getLang("error.syntax")));
 
         radius = getConfig().getInt("radius");
         maxLength = getConfig().getInt("max-length");
