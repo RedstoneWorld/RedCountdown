@@ -27,7 +27,7 @@ public final class RedCountdown extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand("counter").setExecutor(this);
+        getCommand("redcountdown").setExecutor(this);
         loadConfig();
     }
 
@@ -35,8 +35,8 @@ public final class RedCountdown extends JavaPlugin {
         saveDefaultConfig();
         reloadConfig();
 
-        getCommand("counter").setPermissionMessage(getLang("error.no-permission", "permission", getCommand("counter").getPermission()));
-        getCommand("counter").setUsage(translate(getLang("error.syntax")));
+        getCommand("redcountdown").setPermissionMessage(getLang("error.no-permission", "permission", getCommand("counter").getPermission()));
+        getCommand("redcountdown").setUsage(translate(getLang("error.syntax")));
 
         radius = getConfig().getInt("radius");
         maxLength = getConfig().getInt("max-length");
