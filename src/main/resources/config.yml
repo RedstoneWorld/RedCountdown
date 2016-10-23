@@ -2,17 +2,14 @@ radius: 10
 max-length: 10
 titles:
 - lowest: 2
-  title:
-  - "&4%number%"
-# - "subtitle"
+  title: "&4%number%"
+# subtitle: "subtitle"
 - lowest: 1
-  title:
-  - "&e%number%"
-# - "subtitle"
+  title: "&e%number%"
+# subtitle: "subtitle"
 - lowest: 0
-  title:
-  - "&2Los!"
-# - "subtitle"
+  title: "&2Los!"
+# subtitle: "subtitle"
 msg:
   started: "&eCountdown wurde gestartet (%time% Sek.)"
   finished: "&a%time% Sekunden Countdown erfolgreich beendet."

@@ -45,7 +45,7 @@ public final class RedCountdown extends JavaPlugin {
 
         titles = new ArrayList<>();
         for (Map<?, ?> title : getConfig().getMapList("titles")) {
-            titles.add(new Title((Integer) title.get("lowest"), (List<String>) title.get("title")));
+            titles.add(new Title(title));
         }
     }
 
@@ -164,17 +164,30 @@ public final class RedCountdown extends JavaPlugin {
     }
 
     private class Title {
-        private int lowest;
-        private String title = "";
-        private String subTitle = "";
+        private final int lowest;
+        private final String title;
+        private final String subTitle;
 
-        public Title(int lowest, List<String> titleList) {
+        public Title(int lowest, String title, String subTitle) {
             this.lowest = lowest;
-            if (titleList.size() > 0) {
-                this.title = titleList.get(0);
+            this.title = title;
+            this.subTitle = subTitle;
+        }
+
+        public Title(Map<?, ?> title) throws IllegalArgumentException {
+            if (!(title.containsKey("lowest") && title.get("lowest") instanceof Integer)) {
+                throw new IllegalArgumentException("lowest is not an Integer?");
             }
-            if (titleList.size() > 1) {
-                this.subTitle = titleList.get(1);
+            this.lowest = (Integer) title.get("lowest");
+            if (title.containsKey("title")) {
+                this.title = (String) title.get("title");
+            } else {
+                this.title = "";
+            }
+            if (title.containsKey("subtitle")) {
+                this.subTitle = (String) title.get("subtitle");
+            } else {
+                this.subTitle = "";
             }
         }
 
