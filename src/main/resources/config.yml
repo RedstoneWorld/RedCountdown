@@ -24,4 +24,4 @@ msg:
     countdown-too-long: "&c%input% ist zu lang! Die maximale Länge ist %max-length% Sekunden!"
     no-countdown-running: "&cEs läuft zur Zeit kein Countdown?"
     countdown-already-running: "&cEs läuft zur Zeit schon ein Countdown! Beende ihn mit /counter cancel."
-    unsupported-sender: "&c%tyoe% können keine Countdowns starten!"
+    unsupported-sender: "&c%type% können keine Countdowns starten!"
