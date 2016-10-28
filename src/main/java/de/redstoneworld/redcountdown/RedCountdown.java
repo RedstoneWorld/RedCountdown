@@ -202,8 +202,9 @@ public final class RedCountdown extends JavaPlugin {
 
                 if (soundSection.containsKey("volume")) {
                     Object volume = soundSection.get("volume");
-                    if (volume instanceof Float || volume instanceof Integer || volume instanceof Double) {
-                        soundVolume = (float) volume;
+
+                    if (volume instanceof Number) {
+                        soundVolume = ((Number) volume).floatValue();
                     } else if (volume instanceof String) {
                         soundVolume = Float.parseFloat((String) volume);
                     }
@@ -211,8 +212,8 @@ public final class RedCountdown extends JavaPlugin {
 
                 if (soundSection.containsKey("pitch")) {
                     Object pitch = soundSection.get("pitch");
-                    if (pitch instanceof Float || pitch instanceof Integer || pitch instanceof Double) {
-                        soundPitch = (float) pitch;
+                    if (pitch instanceof Number) {
+                        soundPitch = ((Number) pitch).floatValue();
                     } else if (pitch instanceof String) {
                         soundPitch = Float.parseFloat((String) pitch);
                     }
