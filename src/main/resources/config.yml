@@ -2,6 +2,10 @@ radius: 10
 max-length: 10
 titles:
 - lowest: 2
+#  sound:
+#    id: "entity.arrow.successful_hit"
+#    volume: 100.0
+#    pitch: 1.0
   title: "&4%number%"
 # subtitle: "subtitle"
 - lowest: 1

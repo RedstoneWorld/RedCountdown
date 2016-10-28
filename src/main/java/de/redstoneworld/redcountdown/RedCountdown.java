@@ -121,6 +121,7 @@ public final class RedCountdown extends JavaPlugin {
 
                         players.stream().filter(Player::isOnline).forEach(player -> {
                             player.sendTitle(titleText, subTitleText);
+                            player.playSound(player.getLocation(), title.getSound(), title.getSoundVolume(), title.getSoundPitch());
                         });
 
                         if (title.getLowest() == step) {
@@ -165,8 +166,11 @@ public final class RedCountdown extends JavaPlugin {
 
     private class Title {
         private final int lowest;
-        private final String title;
-        private final String subTitle;
+        private String title = "";
+        private String subTitle = "";
+        private String sound = null;
+        private float soundVolume = 100.0f;
+        private float soundPitch = 1.0f;
 
         public Title(int lowest, String title, String subTitle) {
             this.lowest = lowest;
@@ -178,16 +182,41 @@ public final class RedCountdown extends JavaPlugin {
             if (!(title.containsKey("lowest") && title.get("lowest") instanceof Integer)) {
                 throw new IllegalArgumentException("lowest is not an Integer?");
             }
+
             this.lowest = (Integer) title.get("lowest");
+
             if (title.containsKey("title")) {
                 this.title = (String) title.get("title");
-            } else {
-                this.title = "";
             }
+
             if (title.containsKey("subtitle")) {
                 this.subTitle = (String) title.get("subtitle");
-            } else {
-                this.subTitle = "";
+            }
+
+            if (title.containsKey("sound")) {
+                Map<?, ?> soundSection = (Map<?, ?>) title.get("sound");
+                if (!soundSection.containsKey("id")) {
+                    throw new IllegalArgumentException("sound has no id?");
+                }
+                sound = (String) soundSection.get("sound");
+
+                if (soundSection.containsKey("volume")) {
+                    Object volume = soundSection.get("volume");
+                    if (volume instanceof Float || volume instanceof Integer || volume instanceof Double) {
+                        soundVolume = (float) volume;
+                    } else if (volume instanceof String) {
+                        soundVolume = Float.parseFloat((String) volume);
+                    }
+                }
+
+                if (soundSection.containsKey("pitch")) {
+                    Object pitch = soundSection.get("pitch");
+                    if (pitch instanceof Float || pitch instanceof Integer || pitch instanceof Double) {
+                        soundPitch = (float) pitch;
+                    } else if (pitch instanceof String) {
+                        soundPitch = Float.parseFloat((String) pitch);
+                    }
+                }
             }
         }
 
@@ -201,6 +230,18 @@ public final class RedCountdown extends JavaPlugin {
 
         public String getSubTitle() {
             return subTitle;
+        }
+
+        public String getSound() {
+            return sound;
+        }
+
+        public float getSoundVolume() {
+            return soundVolume;
+        }
+
+        public float getSoundPitch() {
+            return soundPitch;
         }
     }
 }
