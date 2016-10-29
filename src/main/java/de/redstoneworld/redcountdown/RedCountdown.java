@@ -84,10 +84,11 @@ public final class RedCountdown extends JavaPlugin {
 
                 String titleText = translate(title.getTitle(), "number", String.valueOf(step));
                 String subTitleText = translate(title.getSubTitle(), "number", String.valueOf(step));
+                String soundId = translate(title.getSound(), "number", String.valueOf(step));
 
                 players.stream().filter(Player::isOnline).forEach(player -> {
                     player.sendTitle(titleText, subTitleText);
-                    player.playSound(player.getLocation(), title.getSound(), title.getSoundVolume(), title.getSoundPitch());
+                    player.playSound(player.getLocation(), soundId, title.getSoundVolume(), title.getSoundPitch());
                 });
 
                 if (title.getLowest() == step) {
