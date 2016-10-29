@@ -88,7 +88,7 @@ public final class RedCountdown extends JavaPlugin {
 
                 String titleText = translate(title.getTitle(), "number", String.valueOf(step));
                 String subTitleText = translate(title.getSubTitle(), "number", String.valueOf(step));
-                String soundId = translate(title.getSound(), "number", String.valueOf(step));
+                String soundId = (title.getSound() != null) ? translate(title.getSound(), "number", String.valueOf(step)) : null;
 
                 players.stream().filter(Player::isOnline).forEach(player -> {
                     player.sendTitle(titleText, subTitleText);
