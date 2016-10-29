@@ -50,7 +50,7 @@ class RedCountdownTitle {
             if (!soundSection.containsKey("id")) {
                 throw new IllegalArgumentException("sound has no id?");
             }
-            sound = (String) soundSection.get("sound");
+            sound = (String) soundSection.get("id");
 
             if (soundSection.containsKey("volume")) {
                 Object volume = soundSection.get("volume");
