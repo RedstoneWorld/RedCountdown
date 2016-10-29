@@ -3,7 +3,7 @@ max-length: 10
 titles:
 - lowest: 2
 #  sound:
-#    id: "entity.arrow.successful_hit"
+#    id: "entity.arrow.hit_player"
 #    volume: 100.0
 #    pitch: 1.0
   title: "&4%number%"
