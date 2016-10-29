@@ -41,9 +41,13 @@ public final class RedCountdown extends JavaPlugin {
 
         titles = new ArrayList<>();
         for (Map<?, ?> titleConfig : getConfig().getMapList("titles")) {
-            RedCountdownTitle title = new RedCountdownTitle(titleConfig);
-            titles.add(title);
-            getLogger().log(Level.INFO, "Loaded " + title.toString());
+            try {
+                RedCountdownTitle title = new RedCountdownTitle(titleConfig);
+                titles.add(title);
+                getLogger().log(Level.INFO, "Loaded " + title.toString());
+            } catch (IllegalArgumentException e) {
+                getLogger().log(Level.WARNING, "Error while loading a title from the config: " + e.getMessage());
+            }
         }
     }
 
