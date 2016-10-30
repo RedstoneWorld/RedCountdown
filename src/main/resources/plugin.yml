@@ -6,7 +6,7 @@ commands:
    redcountdown:
       aliases: [counter,countdown]
       description: Plugin command description.
-      usage: /<command> <time>|cancel|reload
+      usage: /<command> <time>|cancel <startername>|reload
       permission: rwm.redcountdown.use
       permission-message: You don't have the permission <permission>
 permissions:
