@@ -26,4 +26,3 @@ msg:
     no-countdown-running: "&cEs läuft zur Zeit kein Countdown?"
     countdown-already-running: "&cEs läuft zur Zeit schon ein Countdown! Beende ihn mit /counter cancel."
     unsupported-sender: "&c%type% können keine Countdowns starten!"
-    not-started-by-you: "&cDer zur Zeit laufende Countdown wurde nicht von dir sondern von %starter% gestartet!"

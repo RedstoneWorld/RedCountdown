@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -20,8 +21,7 @@ public final class RedCountdown extends JavaPlugin {
 
     private List<RedCountdownTitle> titles;
 
-    private BukkitTask countdownTask = null;
-    private CommandSender countdownStarter = null;
+    private Map<String, BukkitTask> countdownTasks = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -73,14 +73,14 @@ public final class RedCountdown extends JavaPlugin {
     }
 
     public void startCountdown(CommandSender sender, List<Player> players, int length) {
-        countdownStarter = sender;
-        countdownTask = new BukkitRunnable() {
+        BukkitTask countdownTask = new BukkitRunnable() {
             int step = length;
             int titlesIndex = 0;
+            CommandSender starter = sender;
 
             @Override
             public void run() {
-                if (!isCountdownRunning()) {
+                if (!hasCountdownRunning(starter.getName().toLowerCase())) {
                     cancel();
                     return;
                 }
@@ -102,25 +102,31 @@ public final class RedCountdown extends JavaPlugin {
 
                 if (step == 0) {
                     cancel();
-                    countdownTask = null;
-                    countdownStarter.sendMessage(getLang("finished", "time", String.valueOf(length)));
+                    countdownTasks.remove(starter.getName().toLowerCase());
+                    starter.sendMessage(getLang("finished", "time", String.valueOf(length)));
                 }
                 step--;
             }
         }.runTaskTimer(this, 0, 20);
+        countdownTasks.put(sender.getName().toLowerCase(), countdownTask);
     }
 
-    public boolean cancelCountdown() {
-        if (isCountdownRunning()) {
+    public boolean cancelCountdown(String starter) {
+        if (hasCountdownRunning(starter)) {
+            BukkitTask countdownTask = getCountdownTask(starter);
             countdownTask.cancel();
-            countdownTask = null;
+            countdownTasks.remove(starter.toLowerCase());
             return true;
         }
         return false;
     }
 
-    public boolean isCountdownRunning() {
-        return countdownTask != null;
+    private BukkitTask getCountdownTask(String starter) {
+        return countdownTasks.get(starter.toLowerCase());
+    }
+
+    public boolean hasCountdownRunning(String starter) {
+        return countdownTasks.containsKey(starter.toLowerCase());
     }
 
     public int getMaxLength() {
@@ -129,9 +135,5 @@ public final class RedCountdown extends JavaPlugin {
 
     public int getRadius() {
         return radius;
-    }
-
-    public CommandSender getCountdownStarter() {
-        return countdownStarter;
     }
 }

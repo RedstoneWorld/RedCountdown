@@ -43,20 +43,16 @@ public class RedCountdownCommand implements CommandExecutor {
                 return true;
 
             } else if ("cancel".equalsIgnoreCase(args[0])) {
-                if (plugin.isCountdownRunning()) {
-                    if (plugin.getCountdownStarter() == sender || sender.hasPermission("rwm.redcountdown.cancel.others")) {
-                        plugin.cancelCountdown();
-                        sender.sendMessage(plugin.getLang("cancelled"));
-                    } else {
-                        sender.sendMessage(plugin.getLang("error.not-started-by-you", "starter", plugin.getCountdownStarter().getName()));
-                    }
+                String starterName = args.length > 1 && sender.hasPermission("rwm.redcountdown.cancel.others") ? args[1] : sender.getName();
+                if (plugin.cancelCountdown(starterName)) {
+                    sender.sendMessage(plugin.getLang("cancelled"));
                 } else {
                     sender.sendMessage(plugin.getLang("error.no-countdown-running"));
                 }
                 return true;
 
             } else {
-                if (plugin.isCountdownRunning()) {
+                if (plugin.hasCountdownRunning(sender.getName())) {
                     sender.sendMessage(plugin.getLang("error.countdown-already-running"));
                     return true;
                 }
