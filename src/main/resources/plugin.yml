@@ -16,3 +16,6 @@ permissions:
    rwm.redcountdown.reload:
       description: Gives permission to reload the plugin
       default: op
+   rwm.redcountdown.cancel.others:
+      description: Gives permission to cancel countdowns started by others
+      default: op

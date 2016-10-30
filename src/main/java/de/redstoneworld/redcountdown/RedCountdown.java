@@ -21,6 +21,7 @@ public final class RedCountdown extends JavaPlugin {
     private List<RedCountdownTitle> titles;
 
     private BukkitTask countdownTask = null;
+    private CommandSender countdownStarter = null;
 
     @Override
     public void onEnable() {
@@ -72,10 +73,10 @@ public final class RedCountdown extends JavaPlugin {
     }
 
     public void startCountdown(CommandSender sender, List<Player> players, int length) {
+        countdownStarter = sender;
         countdownTask = new BukkitRunnable() {
             int step = length;
             int titlesIndex = 0;
-            CommandSender starter = sender;
 
             @Override
             public void run() {
@@ -102,7 +103,7 @@ public final class RedCountdown extends JavaPlugin {
                 if (step == 0) {
                     cancel();
                     countdownTask = null;
-                    starter.sendMessage(getLang("finished", "time", String.valueOf(length)));
+                    countdownStarter.sendMessage(getLang("finished", "time", String.valueOf(length)));
                 }
                 step--;
             }
@@ -110,7 +111,7 @@ public final class RedCountdown extends JavaPlugin {
     }
 
     public boolean cancelCountdown() {
-        if (countdownTask != null) {
+        if (isCountdownRunning()) {
             countdownTask.cancel();
             countdownTask = null;
             return true;
@@ -128,5 +129,9 @@ public final class RedCountdown extends JavaPlugin {
 
     public int getRadius() {
         return radius;
+    }
+
+    public CommandSender getCountdownStarter() {
+        return countdownStarter;
     }
 }
