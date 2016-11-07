@@ -30,9 +30,7 @@ public class RedCountdownCommand implements CommandExecutor {
 
             } else if ("cancel".equalsIgnoreCase(args[0])) {
                 String starterName = args.length > 1 && sender.hasPermission("rwm.redcountdown.cancel.others") ? args[1] : sender.getName();
-                if (plugin.cancelCountdown(starterName)) {
-                    sender.sendMessage(plugin.getLang("cancelled"));
-                } else {
+                if (!plugin.cancelCountdown(sender, starterName)) {
                     sender.sendMessage(plugin.getLang("error.no-countdown-running"));
                 }
                 return true;
@@ -84,8 +82,6 @@ public class RedCountdownCommand implements CommandExecutor {
                 ).collect(Collectors.toList());
 
                 plugin.startCountdown(sender, players, length);
-
-                sender.sendMessage(plugin.getLang("started", "time", String.valueOf(length)));
                 return true;
             }
         }

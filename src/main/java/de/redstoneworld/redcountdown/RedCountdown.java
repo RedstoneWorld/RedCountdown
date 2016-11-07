@@ -22,7 +22,7 @@ public final class RedCountdown extends JavaPlugin {
 
     private List<RedCountdownTitle> titles;
 
-    private Map<String, BukkitTask> countdownTasks = new HashMap<>();
+    private Map<String, CountdownRunnable> countdownTasks = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -75,10 +75,18 @@ public final class RedCountdown extends JavaPlugin {
     }
 
     public void startCountdown(CommandSender sender, List<Player> players, int length) {
-        BukkitTask countdownTask = new BukkitRunnable() {
-            int step = length;
-            int titlesIndex = 0;
-            CommandSender starter = sender;
+        String msgStarted = getLang("started",
+                "time", String.valueOf(length),
+                "starter", sender.getName()
+        );
+        players.stream().filter(Player::isOnline).forEach(player -> {
+            player.sendMessage(msgStarted);
+        });
+        if (sender instanceof Player && !players.contains(sender)) {
+            sender.sendMessage(msgStarted);
+        }
+
+        CountdownRunnable countdownRunnable = new CountdownRunnable(sender, players, length) {
 
             @Override
             public void run() {
@@ -105,25 +113,36 @@ public final class RedCountdown extends JavaPlugin {
                 if (step == 0) {
                     cancel();
                     countdownTasks.remove(starter.getName().toLowerCase());
-                    starter.sendMessage(getLang("finished", "time", String.valueOf(length)));
+                    String msgFinished = getLang("finished",
+                            "time", String.valueOf(length),
+                            "starter", sender.getName()
+                    );
+                    players.stream().filter(Player::isOnline).forEach(player -> {
+                        sender.sendMessage(msgFinished);
+                    });
+                    if (!(starter instanceof Player) || !players.contains(starter)) {
+                        starter.sendMessage(msgFinished);
+                    }
                 }
                 step--;
             }
-        }.runTaskTimer(this, 0, 20);
-        countdownTasks.put(sender.getName().toLowerCase(), countdownTask);
+
+        };
+        countdownRunnable.runTaskTimer(this, 0, 20);
+        countdownTasks.put(sender.getName().toLowerCase(), countdownRunnable);
     }
 
-    public boolean cancelCountdown(String starter) {
+    public boolean cancelCountdown(CommandSender sender, String starter) {
         if (hasCountdownRunning(starter)) {
-            BukkitTask countdownTask = getCountdownTask(starter);
-            countdownTask.cancel();
+            CountdownRunnable countdownTask = getCountdownTask(starter);
+            countdownTask.cancel(sender);
             countdownTasks.remove(starter.toLowerCase());
             return true;
         }
         return false;
     }
 
-    private BukkitTask getCountdownTask(String starter) {
+    private CountdownRunnable getCountdownTask(String starter) {
         return countdownTasks.get(starter.toLowerCase());
     }
 
@@ -141,5 +160,48 @@ public final class RedCountdown extends JavaPlugin {
 
     public int getRadius() {
         return radius;
+    }
+
+    private abstract class CountdownRunnable extends BukkitRunnable {
+        private final int length;
+        final List<Player> players;
+        CommandSender starter;
+        int step;
+        int titlesIndex = 0;
+
+        CountdownRunnable(CommandSender starter, List<Player> players, int length) {
+            this.starter = starter;
+            this.players = players;
+            this.length = length;
+            step = length;
+        }
+
+        @Override
+        public void cancel() {
+            super.cancel();
+            String msgCancelled = getLang("cancelled",
+                    "time", String.valueOf(length),
+                    "starter", starter.getName()
+            );
+            players.stream().filter(Player::isOnline).forEach(player -> {
+                player.sendMessage(msgCancelled);
+            });
+        }
+
+        void cancel(CommandSender sender) {
+            cancel();
+            if (!(starter instanceof Player) || !players.contains(starter)) {
+                starter.sendMessage(getLang("cancelled",
+                        "time", String.valueOf(length),
+                        "starter", starter.getName()
+                ));
+            }
+            if (sender != starter && (!(sender instanceof Player) || !players.contains(sender))) {
+                sender.sendMessage(getLang("cancelled",
+                        "time", String.valueOf(length),
+                        "starter", starter.getName()
+                ));
+            }
+        }
     }
 }
