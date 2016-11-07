@@ -17,6 +17,7 @@ import java.util.logging.Level;
 public final class RedCountdown extends JavaPlugin {
 
     private int radius;
+    private int minLength;
     private int maxLength;
 
     private List<RedCountdownTitle> titles;
@@ -38,6 +39,7 @@ public final class RedCountdown extends JavaPlugin {
         command.setUsage(translate(getLang("error.syntax")));
 
         radius = getConfig().getInt("radius");
+        minLength = getConfig().getInt("min-length");
         maxLength = getConfig().getInt("max-length");
 
         titles = new ArrayList<>();
@@ -127,6 +129,10 @@ public final class RedCountdown extends JavaPlugin {
 
     public boolean hasCountdownRunning(String starter) {
         return countdownTasks.containsKey(starter.toLowerCase());
+    }
+
+    public int getMinLength() {
+        return minLength;
     }
 
     public int getMaxLength() {

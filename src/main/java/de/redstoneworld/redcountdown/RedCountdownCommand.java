@@ -54,6 +54,14 @@ public class RedCountdownCommand implements CommandExecutor {
                 if (length > plugin.getMaxLength()) {
                     sender.sendMessage(plugin.getLang("error.countdown-too-long",
                             "input", String.valueOf(length),
+                            "min-length", String.valueOf(plugin.getMinLength()),
+                            "max-length", String.valueOf(plugin.getMaxLength())
+                    ));
+                    return true;
+                } else if (length < plugin.getMinLength()) {
+                    sender.sendMessage(plugin.getLang("error.countdown-too-short",
+                            "input", String.valueOf(length),
+                            "min-length", String.valueOf(plugin.getMinLength()),
                             "max-length", String.valueOf(plugin.getMaxLength())
                     ));
                     return true;

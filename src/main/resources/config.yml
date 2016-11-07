@@ -1,5 +1,6 @@
 radius: 10
 max-length: 10
+min-length: 3
 titles:
 - lowest: 2
 #  sound:
@@ -23,6 +24,7 @@ msg:
     no-permission: "&cDu hast nicht das Recht %permission%!"
     not-a-number: "&c%input% ist keine Nummer!"
     countdown-too-long: "&c%input% ist zu lang! Die maximale Länge ist %max-length% Sekunden!"
+    countdown-too-short: "&c%input% ist zu kurz! Die minimale Länge ist %min-length% Sekunden!"
     no-countdown-running: "&cEs läuft zur Zeit kein Countdown?"
     countdown-already-running: "&cEs läuft zur Zeit schon ein Countdown! Beende ihn mit /counter cancel."
     unsupported-sender: "&c%type% können keine Countdowns starten!"
