@@ -79,7 +79,8 @@ public class RedCountdownCommand implements CommandExecutor {
                 }
 
                 final List<Player> players = getServer().getOnlinePlayers().stream().filter(
-                        player -> player.getLocation().distanceSquared(senderLocation) <= plugin.getRadius() * plugin.getRadius()
+                        player -> player.getWorld() == senderLocation.getWorld()
+                                && player.getLocation().distanceSquared(senderLocation) <= plugin.getRadius() * plugin.getRadius()
                 ).collect(Collectors.toList());
 
                 plugin.startCountdown(sender, players, length);
