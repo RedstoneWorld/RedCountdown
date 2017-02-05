@@ -118,7 +118,7 @@ public final class RedCountdown extends JavaPlugin {
                             "starter", sender.getName()
                     );
                     players.stream().filter(Player::isOnline).forEach(player -> {
-                        sender.sendMessage(msgFinished);
+                        player.sendMessage(msgFinished);
                     });
                     if (!(starter instanceof Player) || !players.contains(starter)) {
                         starter.sendMessage(msgFinished);
