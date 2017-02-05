@@ -176,9 +176,8 @@ public final class RedCountdown extends JavaPlugin {
             step = length;
         }
 
-        @Override
-        public void cancel() {
-            super.cancel();
+        void cancel(CommandSender sender) {
+            cancel();
             String msgCancelled = getLang("cancelled",
                     "time", String.valueOf(length),
                     "starter", starter.getName()
@@ -186,21 +185,19 @@ public final class RedCountdown extends JavaPlugin {
             players.stream().filter(Player::isOnline).forEach(player -> {
                 player.sendMessage(msgCancelled);
             });
-        }
-
-        void cancel(CommandSender sender) {
-            cancel();
-            if (!(starter instanceof Player) || !players.contains(starter)) {
-                starter.sendMessage(getLang("cancelled",
-                        "time", String.valueOf(length),
-                        "starter", starter.getName()
-                ));
-            }
-            if (sender != starter && (!(sender instanceof Player) || !players.contains(sender))) {
-                sender.sendMessage(getLang("cancelled",
-                        "time", String.valueOf(length),
-                        "starter", starter.getName()
-                ));
+            if (sender != null) {
+                if (!(starter instanceof Player) || !players.contains(starter)) {
+                    starter.sendMessage(getLang("cancelled",
+                            "time", String.valueOf(length),
+                            "starter", starter.getName()
+                    ));
+                }
+                if (sender != starter && (!(sender instanceof Player) || !players.contains(sender))) {
+                    sender.sendMessage(getLang("cancelled",
+                            "time", String.valueOf(length),
+                            "starter", starter.getName()
+                    ));
+                }
             }
         }
     }
