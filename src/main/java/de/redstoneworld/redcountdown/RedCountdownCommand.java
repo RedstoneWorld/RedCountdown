@@ -28,7 +28,7 @@ public class RedCountdownCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.YELLOW + "Config reloaded!");
                 return true;
 
-            } else if ("cancel".equalsIgnoreCase(args[0])) {
+            } else if ("cancel".equalsIgnoreCase(args[0]) || "stop".equalsIgnoreCase(args[0]) || "stopp".equalsIgnoreCase(args[0])) {
                 String starterName = args.length > 1 && sender.hasPermission("rwm.redcountdown.cancel.others") ? args[1] : sender.getName();
                 if (!plugin.cancelCountdown(sender, starterName)) {
                     sender.sendMessage(plugin.getLang("error.no-countdown-running"));
